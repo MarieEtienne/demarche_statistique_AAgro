@@ -48,7 +48,7 @@ Ouvrir le fichier `TD1_script.R` dans RStudio.
 
 **Remarque :** le fichier `TD1_script.R` est appelé **script**. C'est un fichier au format texte contenant des lignes de commandes organisées, dont l'interprétation réalise une analyse de données (production de graphiques ou de résultats numériques pour éclairer une problématique).
 
-Les lignes qui commencent par `#` ne sont pas interprétées par R. Elles permettent de faire des commentaires et donc de contextualiser le script.
+Les lignes qui commencent par `#` ne sont pas interprétées par R. Elles permettent de faire des commentaires et donc de contextualiser le script. Dans le cadre du TD, il est utile d'utiliser ce mode de commentaires pour prendre des notes.
 
 
 ####  Utiliser un script ` R` pour importer des données
