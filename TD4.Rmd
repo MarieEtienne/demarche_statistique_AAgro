@@ -25,7 +25,7 @@ out_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 # {.tabset .tabset-fade .tabset-pills}
 
 ##  Objectifs de la séance  
-- Utiliser l'ACP pour explorer un jeu de données
+- Utiliser l'ACP pour explorer un jeu de données.
 
 ## Exercices 
 
