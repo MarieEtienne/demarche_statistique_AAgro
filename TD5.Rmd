@@ -78,11 +78,13 @@ Pour évaluer l'impact de complément alimentaire sur la production de lait dans
  
 Un groupe industriel commercialisant du café souhaite comparer les cafés provenant de différents lieux de production à partir de leur profil de composition physico-chimique, dont une des composantes importantes est le taux de matière sèche (`DM`). Pour cela, il s'appuie sur des données contenant le lieu de production, codé par un entier allant de `1` à `7`, de 240 mesures de café disponible sur l'onglet Scripts et données de la [page d'accueil du module](https://agrocampusds.github.io/demarche_statistique/index.html).
 
+
 #### Description du jeu de données sur la qualité du  café
 
 *Importation du jeu de données*
 
 * Importer le jeu de données `cafe_DM.csv` disponible sur la page des [jeux de données ](index.html) dans un  objet nommé `cafe`  en utilisant un script `TD5_script.R` que vous aurez créé dans votre répertoire de projet.
+
 
 ```{r import_data}
 cafe <- read.table('https://agrocampusds.github.io/demarche_statistique/cafe_DM.csv', sep = ';' , stringsAsFactors = TRUE, header = TRUE)
@@ -101,6 +103,7 @@ cafe <- cafe %>%
 
 *Visualisation des données*
 
+
 * Construire maintenant une boîte à moustaches des taux de matière sèche selon l'origine des cafés.
 
 
@@ -109,7 +112,8 @@ cafe %>%
   ggplot() + geom_boxplot(aes(x=Localisation, y = DM))
 ```
 
-*Calcul de statistiques descriptives*
+
+#### Calcul de statistiques descriptives
 
 
 La commande suivante permet de calculer la moyenne de matière sèche pour chaque origine de café.
@@ -148,17 +152,15 @@ stat_desc %>%
   kable_styling(latex_options = "striped")
 ```
 
+
 #### Modélisation statistique
 
-*Mise en place de l'analyse statistique*
+#### Mise en place de l'analyse statistique
 
 * Donner l'expression du modèle statistique M$_1$ permettant de répondre à la question 'Les taux de matière sèche diffèrent-ils d'une origine à l'autre ?  Quels sont les paramètres de ce modèle ?
 
-* Quelles sont les hypothèses H$_{0}$ et H$_{1}$ du test de l'existence de différences moyennes entre les lieux de production ? Exprimer ces hypothèses à partir des paramètres du modèle de la question précédente.
-
-
-
 *Ajustement du modèle* 
+
 
  La fonction `lm` permet d'ajuster le modèle d'analyse de la variance. 
  
@@ -173,6 +175,14 @@ Il peut être ajusté grâce à la commande suivante :
 ```{r anova_M0, echo = TRUE, results='markup'}
 DM_lm0 <- lm(DM~1, data = cafe)
 ```
+
+
+*Test de l'effet origine* 
+
+* Quelles sont les hypothèses H$_{0}$ et H$_{1}$ du test de l'existence de différences moyennes entre les lieux de production ? Exprimer ces hypothèses à partir des paramètres du modèle de la question précédente.
+
+
+
 
 On peut comparer les deux modèles grâce à la commande:
 
@@ -233,7 +243,7 @@ RSS0 <- cafe %>%
 R2 <- (RSS0-RSS)/RSS0
 ```
 
-*Test de l'effet origine sur la quantité de matière sèche*
+#### Test de l'effet origine sur la quantité de matière sèche
 
 *   Quelle est l'expression de la statistique de test permettant de tester l'existence de différences moyennes entre les lieux de production ? Quelle est la valeur prise par cette statistique de test ?
 
@@ -269,7 +279,8 @@ ggplot(data.frame(x = c(0, 7)), aes(x)) +
 ```
 
 
-#### Conclusion de l'étude
+
+### Conclusion de l'étude
 
 * Donner la probabilité qu'une variable aléatoire de loi $\mathcal{F}_{0}$  dépasse la valeur observée sur les données de café et conclure sur les différences de matière sèche en fonction de l'origine du café
 
