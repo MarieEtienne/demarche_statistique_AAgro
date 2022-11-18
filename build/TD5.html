@@ -421,7 +421,9 @@ $(document).ready(function () {
 <ul>
 <li>Construire maintenant une boîte à moustaches des taux de matière sèche selon l’origine des cafés.</li>
 </ul>
-<p><em>Calcul de statistiques descriptives</em></p>
+</div>
+<div id="calcul-de-statistiques-descriptives" class="section level4">
+<h4>Calcul de statistiques descriptives</h4>
 <p>La commande suivante permet de calculer la moyenne de matière sèche pour chaque origine de café.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cafe <span class="sc">%&gt;%</span> </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Localisation) <span class="sc">%&gt;%</span> </span>
@@ -617,10 +619,11 @@ q95
 </div>
 <div id="modélisation-statistique" class="section level4">
 <h4>Modélisation statistique</h4>
-<p><em>Mise en place de l’analyse statistique</em></p>
+</div>
+<div id="mise-en-place-de-lanalyse-statistique" class="section level4">
+<h4>Mise en place de l’analyse statistique</h4>
 <ul>
-<li><p>Donner l’expression du modèle statistique M<span class="math inline">\(_1\)</span> permettant de répondre à la question ’Les taux de matière sèche diffèrent-ils d’une origine à l’autre ? Quels sont les paramètres de ce modèle ?</p></li>
-<li><p>Quelles sont les hypothèses H<span class="math inline">\(_{0}\)</span> et H<span class="math inline">\(_{1}\)</span> du test de l’existence de différences moyennes entre les lieux de production ? Exprimer ces hypothèses à partir des paramètres du modèle de la question précédente.</p></li>
+<li>Donner l’expression du modèle statistique M<span class="math inline">\(_1\)</span> permettant de répondre à la question ’Les taux de matière sèche diffèrent-ils d’une origine à l’autre ? Quels sont les paramètres de ce modèle ?</li>
 </ul>
 <p><em>Ajustement du modèle</em></p>
 <p>La fonction <code>lm</code> permet d’ajuster le modèle d’analyse de la variance.</p>
@@ -630,6 +633,10 @@ q95
 </ul>
 <p>Il peut être ajusté grâce à la commande suivante :</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>DM_lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(DM<span class="sc">~</span><span class="dv">1</span>, <span class="at">data =</span> cafe)</span></code></pre></div>
+<p><em>Test de l’effet origine</em></p>
+<ul>
+<li>Quelles sont les hypothèses H<span class="math inline">\(_{0}\)</span> et H<span class="math inline">\(_{1}\)</span> du test de l’existence de différences moyennes entre les lieux de production ? Exprimer ces hypothèses à partir des paramètres du modèle de la question précédente.</li>
+</ul>
 <p>On peut comparer les deux modèles grâce à la commande:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(DM_lm0, DM_lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
@@ -682,7 +689,9 @@ q95
 <li><p>Que vaut la somme des carrés des écarts résiduels RSS<span class="math inline">\(_{0}\)</span> mesurant la qualité d’ajustement du modèle nul ?</p></li>
 <li><p>En déduire la valeur du coefficient R<span class="math inline">\(^{2}\)</span> du modèle M<span class="math inline">\(_1\)</span>.</p></li>
 </ul>
-<p><em>Test de l’effet origine sur la quantité de matière sèche</em></p>
+</div>
+<div id="test-de-leffet-origine-sur-la-quantité-de-matière-sèche" class="section level4">
+<h4>Test de l’effet origine sur la quantité de matière sèche</h4>
 <ul>
 <li><p>Quelle est l’expression de la statistique de test permettant de tester l’existence de différences moyennes entre les lieux de production ? Quelle est la valeur prise par cette statistique de test ?</p></li>
 <li><p>Quelle est la distribution sous l’hypothèse H<span class="math inline">\(_{0}\)</span>, <span class="math inline">\(\mathcal{F}_{0}\)</span>, de la statistique de test <span class="math inline">\(F\)</span> introduite à la question précédente ?</p></li>
@@ -690,13 +699,13 @@ q95
 <p>La fonction <code>pf(q = .., df1 = .. , df2= .. , lower.tail = FALSE)</code> donne la probabilité qu’une variable aléatoire suivant une loi de Fisher de paramètre <code>df1</code>, <code>df2</code> dépasse la valeur <code>q</code>.</p>
 <p><img src="TD5_files/figure-html/graph_p_value-1.png" width="672" /></p>
 </div>
-<div id="conclusion-de-létude" class="section level4">
-<h4>Conclusion de l’étude</h4>
+</div>
+<div id="conclusion-de-létude" class="section level3">
+<h3>Conclusion de l’étude</h3>
 <ul>
 <li>Donner la probabilité qu’une variable aléatoire de loi <span class="math inline">\(\mathcal{F}_{0}\)</span> dépasse la valeur observée sur les données de café et conclure sur les différences de matière sèche en fonction de l’origine du café</li>
 </ul>
 <p>Cette probabilité est la p-value.</p>
-</div>
 </div>
 </div>
 <div id="le-vocabulaire-de-la-séance" class="section level2">
