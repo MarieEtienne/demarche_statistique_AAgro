@@ -31,8 +31,6 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -404,66 +402,11 @@ $(document).ready(function () {
 <h4>Modélisation</h4>
 <ul>
 <li><p>Préciser les différents effets qui peuvent être pris en compte dans un modèle.</p></li>
-<li><p>Construire le modèle et sélectionner le “bon” sous-modèle.</p></li>
+<li><p>Construire le modèle complet</p></li>
+<li><p>Y a t il un effet du sexe ou du traitement ?</p></li>
+<li><p>L’effet du traitement est il le même pour les deux sexes ?</p></li>
+<li><p>Quel traitement préconisez vous ?</p></li>
 <li><p>Que pouvez-vous conseiller comme traitement pour les éleveurs ? Est-ce en adéquation avec les moyennes des rendements par traitement ? Si ce n’est pas le cas, expliquer le paradoxe.</p></li>
-</ul>
-</div>
-</div>
-<div id="etude-du-rendement-fromager-régression-linéaire-simple" class="section level3">
-<h3>Etude du rendement fromager : régression linéaire simple</h3>
-<p>Un laboratoire d’analyse souhaite mettre en évidence l’influence de la composition du lait sur le rendement fromager. Pour ce faire, il a mesuré sur un échantillon de n = 85 laits, la densité, le taux butyreux, le taux de protéine, le taux de caséine, l’extrait sec et le rendement fromager de chacun de ces laits.</p>
-<div id="importation-du-jeu-de-données-et-matrice-des-corrélations" class="section level4">
-<h4>Importation du jeu de données et matrice des corrélations</h4>
-<ul>
-<li><p>Charger les données provenant du fichier <code>lait.txt</code>.</p></li>
-<li><p>Calculer les corrélations entre les variables à l’aide de la fonction <code>cor</code>.</p></li>
-<li><p>Construire le modèle permettant de prédire le rendement et sélectionner le sous-modèle adapté.</p></li>
-<li><p>Commenter les estimations des coefficients (rappeler le test effectué pour un coefficient en rappelant les hypothèses, la statistique de test et sa conclusion).</p></li>
-</ul>
-Les mesures sur un nouvel échantillon de lait sont les suivantes :
-<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-DENSITE
-</th>
-<th style="text-align:right;">
-BUTYREUX
-</th>
-<th style="text-align:right;">
-PROTEINE
-</th>
-<th style="text-align:right;">
-CASEINE
-</th>
-<th style="text-align:right;">
-EXTRAITSEC
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1.03
-</td>
-<td style="text-align:right;">
-37.7
-</td>
-<td style="text-align:right;">
-35.7
-</td>
-<td style="text-align:right;">
-28.5
-</td>
-<td style="text-align:right;">
-127.1
-</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>A l’aide de la fonction <code>predict</code>, déterminer l’intervalle de confiance associé à ce rendement moyen.</p></li>
-<li><p>Déterminer l’intervalle de prédiction associé à l’estimation du rendement d’un tel lait.</p></li>
 </ul>
 </div>
 </div>
@@ -473,8 +416,8 @@ EXTRAITSEC
 <div id="commandes-r" class="section level3">
 <h3>Commandes R</h3>
 <ul>
-<li>LinearModel</li>
-<li>compMeans</li>
+<li>lm</li>
+<li>emmeans</li>
 </ul>
 </div>
 <div id="environnement-r" class="section level3">
