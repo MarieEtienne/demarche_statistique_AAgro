@@ -1,5 +1,5 @@
 ---
-title: "TD13 : Prendre en compte un effet bloc"
+title: "TD7 : Prendre en compte un effet bloc"
 author: "UP Mathématiques appliquées"
 date: ''
 output:
