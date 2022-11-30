@@ -88,6 +88,8 @@ poussins_dta %>%
 
 * Construire le modèle complet
 
+#### Tests
+
 * Y a t il un effet du sexe ou du traitement ?
 
 * L'effet du traitement est il le même pour les deux sexes ?
@@ -96,6 +98,9 @@ poussins_dta %>%
 
 * Que pouvez-vous conseiller comme traitement pour les éleveurs ? Est-ce en adéquation avec les moyennes des rendements par traitement ? Si ce n'est pas le cas, expliquer le paradoxe.
 
+#### Conclusion
+
+* Quels sont les conclusions de cette étude ?
 
 ## Le vocabulaire de la séance
 
