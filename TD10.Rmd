@@ -1,0 +1,122 @@
+---
+title: "TD10 : Régression multiple"
+author: "UP Mathématiques appliquées"
+date: ''
+output:
+  html_document:
+    theme: united
+    css: style.css
+    highlight: tango
+mainfont: SourceSansPro
+header-includes:
+- \usepackage[default]{sourcesanspro}
+- \usepackage[T1]{fontenc}
+---
+
+
+```{r setup-TD13, include=FALSE, }
+knitr::opts_chunk$set(echo = FALSE, cache= TRUE, eval = TRUE, fig.show='hide', message = FALSE, warning = FALSE, results = 'hide' )
+library(tidyverse)
+library(kableExtra)
+out_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+```
+
+
+# {.tabset .tabset-fade .tabset-pills}
+
+##  Objectifs de la séance  
+
+* Visualisation de données
+  - Visualiser les relations entre au sein d'un ensemble de variables quantitatives
+  
+* Analyse de données
+   - Utiliser l'ACP pour visualisaer des données
+   - Comprendre le modèle de régression multiple
+   - Analyser les sorties d'un modèles de régression multiple
+  
+  
+## Exercices 
+
+### Etude du rendement fromager
+
+Un laboratoire d'analyse souhaite mettre en évidence l'influence de la composition du lait sur le rendement
+fromager. Pour ce faire, il a mesuré sur un échantillon de n = 85 laits, la densité, le taux butyreux, le taux de
+protéine, le taux de caséine, l'extrait sec et le rendement fromager de chacun de ces laits.
+
+#### Importation du jeu de données  et matrice des corrélations
+* Charger les données provenant du fichier `lait.txt`.
+* Faire une Analyse en Composantes Principales pour visualiser les relations entre les différentes variables
+* A la lumière de cette ACP, à quoi faudra-t-il être attentif dans l'analyse ?
+
+```{r, echo=FALSE, results='markup', eval = TRUE}
+fromages <- read.table("lait.txt", sep = "\t", dec = ",", header = T)
+Mcomp <- lm(RENDEMENT ~ ., data = fromages) 
+```
+
+
+
+#### Modélisation et prédiction
+
+* Construire le modèle permettant de prédire le rendement à l'aide de toutes les variables.
+* La commande AIC dans R permet de calculer le critère AIC pour le modèle sélectionner. Calculer donc ce critère à l'aide de 
+```{r AIC, echo=TRUE}
+extractAIC(Mcomp)
+```
+
+* En regardant la sortie ` summary`, indiquez quelle est la variable la moins importante d'un point de vue statistique ? Enlever cette variable et ajuster le sous modèle obtenu $M_4$ et calculer son AIC.
+
+* La commmande ` step` va mettre en place le processus de sélection de variables descendantes automatiquement
+
+```{r AIC, echo=TRUE}
+M_AIC <- stepAIC(Mcomp)
+summary(M_AIC)
+```
+
+* Le critère BIC est une variante du critère AIC, plus sévère sur l'intérêt d'inclure des variables, on obtient la sélection de variables à l'aide du BIC 
+
+
+```{r AIC, echo=TRUE}
+M_BIC <- stepAIC(Mcomp, k = log(nrow(fromages)))
+summary(M_BIC)
+```
+
+* A la lumière des liens entre les différentes variables, commenter les résultats obtenus pour ce meilleur modèle au sens du BIC (meilleur compromis ajustement/nombre de paramètres)
+
+
+Les mesures sur un nouvel échantillon de lait sont les suivantes :
+```{r, echo=FALSE, results='markup', eval = TRUE}
+fromagesNEW <- data.frame(1.032,37.7,35.7,28.5,127.1) 
+  names(fromagesNEW) <- names(fromages)[-6]
+fromagesNEW %>% 
+  kable(digits=2, format = "html", escape = FALSE) %>%
+  collapse_rows(columns = 1, valign = 'top') %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+* A l'aide de la fonction `predict`, déterminer l'intervalle de confiance associé à ce rendement moyen.
+
+```{r, echo=FALSE, eval=FALSE, results='markup' }
+predict(mod, newdata = fromagesNEW, interval = "confidence")
+```
+
+* Déterminer l'intervalle de prédiction associé à l'estimation du rendement d'un tel lait.
+
+```{r, echo=FALSE, eval=FALSE, results='markup' }
+predict(mod, newdata = fromagesNEW, interval = "prediction")
+```
+
+
+## Le vocabulaire de la séance
+
+### Commandes R
+- extractAIC
+- stepAIC
+
+### Environnement R
+- package(MASS)
+
+### Statistique 
+- Régression multiple
+- ACP
+- AIC
+- BIC
