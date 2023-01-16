@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="UP Mathématique appliquée" />
+<meta name="author" content="UP Mathématiques appliquées" />
 
 
-<title>TD10 : Comparaison de droites de régression</title>
+<title>TD10 : Régression multiple</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -31,6 +31,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -44,6 +46,100 @@
     </style>
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -258,8 +354,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">TD10 : Comparaison de droites de régression</h1>
-<h4 class="author">UP Mathématique appliquée</h4>
+<h1 class="title toc-ignore">TD10 : Régression multiple</h1>
+<h4 class="author">UP Mathématiques appliquées</h4>
 
 </div>
 
@@ -271,60 +367,97 @@ $(document).ready(function () {
 <ul>
 <li>Visualisation de données
 <ul>
-<li>Visualiser les relations entre deux variables (quantitative ou qualitative)</li>
+<li>Visualiser les relations entre au sein d’un ensemble de variables quantitatives</li>
 </ul></li>
 <li>Analyse de données
 <ul>
-<li>Ajuster un modèle d’analyse de la variance et exploiter les résultats qui en découlent</li>
-<li>Ajuster un modèle de régresssion et examiner les résultats qui en découlent</li>
-<li>Comparer des droites de régression (modèle d’analyse de la covariance)</li>
+<li>Utiliser l’ACP pour visualisaer des données</li>
+<li>Comprendre le modèle de régression multiple</li>
+<li>Analyser les sorties d’un modèles de régression multiple</li>
 </ul></li>
 </ul>
 </div>
 <div id="exercices" class="section level2">
 <h2>Exercices</h2>
-<p class="care">
-Prédiction du taux de glucose d’un abricot par colorimétrie
-</p>
-<p>Une des difficultés que rencontrent les producteurs d’abricots est la détermination du stade de maturité du fruit, information utile pour choisir le moment opportun de la récolte. Un abricot cueilli à maturité a un taux de glucose élevé. La colorimétrie est parfois identifiée comme un bon marqueur de la maturité. Il est en effet possible de mesurer précisément la couleur d’un fruit selon trois dimensions correspondant à trois composantes numériques :</p>
+<div id="etude-du-rendement-fromager" class="section level3">
+<h3>Etude du rendement fromager</h3>
+<p>Un laboratoire d’analyse souhaite mettre en évidence l’influence de la composition du lait sur le rendement fromager. Pour ce faire, il a mesuré sur un échantillon de n = 85 laits, la densité, le taux butyreux, le taux de protéine, le taux de caséine, l’extrait sec et le rendement fromager de chacun de ces laits.</p>
+<div id="importation-du-jeu-de-données-et-matrice-des-corrélations" class="section level4">
+<h4>Importation du jeu de données et matrice des corrélations</h4>
 <ul>
-<li>L, la clarté, qui va de 0 (noir) à 100 (blanc),</li>
-<li>a, sur un axe vert (-) - rouge (+),</li>
-<li>b, sur un axe bleu (-) - jaune (+).</li>
-</ul>
-<div id="lien-entre-colorimétrie-et-maturité-de-labricot" class="section level3">
-<h3>Lien entre colorimétrie et maturité de l’abricot</h3>
-<p>Dans un premier temps, on souhaite vérifier le lien entre colorimétrie et maturité d’un abricot à partir de données expérimentales sur 108 abricots d’une même variété, répartis selon 3 stades de maturité (1, 2 ou 3 du moins mûr au plus mûr). Les données sont disponibles dans le fichier <a href="abricotsSG.txt">abricots</a></p>
-<ul>
-<li><p>Importer le jeu de données dans un objet nommé <code>abricots</code> et indiquer le nombre d’abricots dans chaque stade.</p></li>
-<li><p>Construire un graphique illsutrant le lien entre la maturité d’un abricot et son indice colorimétrique a.</p></li>
-<li><p>Construire un test d’égalité des indices <code>a</code> moyens des abricots aux différents stades de maturité.</p></li>
-<li><p>L’indice <code>a</code> est-il un bon candidat pour évaluer la maturité d’un abricot ?</p></li>
+<li>Charger les données provenant du fichier <code>lait.txt</code>.</li>
+<li>Faire une Analyse en Composantes Principales pour visualiser les relations entre les différentes variables</li>
+<li>A la lumière de cette ACP, à quoi faudra-t-il être attentif dans l’analyse ?</li>
 </ul>
 </div>
-<div id="etude-du-lien-entre-lindice-colorimétrique-a-et-le-taux-de-glucose" class="section level3">
-<h3>Etude du lien entre l’indice colorimétrique a et le taux de glucose</h3>
-<p>Un des indicateurs de la qualité de l’abricot est son taux de glucose. On cherche maintenant à savoir comment le taux de glocose dépend du marqueur indirect de la maturité qu’est l’indice colorimétrique a.</p>
+<div id="modélisation-et-prédiction" class="section level4">
+<h4>Modélisation et prédiction</h4>
 <ul>
-<li><p>Construire un graphique décrivant la relation entre le taux de glucose et l’indice <code>a</code>.</p></li>
-<li><p>Proposer un modèle du lien entre le taux de glucose et l’indice <code>a</code> d’un abricot.</p></li>
-<li><p>A l’aide de ce modèle, donner un <strong>intervalle de confiance</strong> de niveau 95% du <strong>taux de glucose moyen</strong> d’un abricot dont l’indice colorimétrique <code>a</code> est égal à 5.</p></li>
-<li><p>A l’aide de ce modèle, donnez un <strong>intervalle de prédiction</strong> de niveau 95% pour <strong>le taux de glucose</strong> d’un abricot dont l’indice colorimétrique ‘a’ est égal à 5.</p></li>
+<li>Construire le modèle permettant de prédire le rendement à l’aide de toutes les variables.</li>
+<li>La commande AIC dans R permet de calculer le critère AIC pour le modèle sélectionner. Calculer donc ce critère à l’aide de</li>
 </ul>
-<p>La différence entre intervalle de confiance pour la valeur moyenne et intervalle de prédiction peut-être représentée graphiquement sous la forme suivante :</p>
-<div class="figure">
-<img src="TD10_files/figure-html/facultatif-1.png" alt="La ligne bleue indique le taux de Glucose moyen prédit par le modèle en fonction de l'indice a, la zone grisée représente l'intervalle de confiance pour ce taux moyen tandis que les deux lignes pointillées rouges délimitent le taux de Glucose prédit pour un abricot selon son indice a" width="672" />
-<p class="caption">
-La ligne bleue indique le taux de Glucose moyen prédit par le modèle en fonction de l’indice a, la zone grisée représente l’intervalle de confiance pour ce taux moyen tandis que les deux lignes pointillées rouges délimitent le taux de Glucose prédit pour un abricot selon son indice a
-</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extractAIC</span>(Mcomp)</span></code></pre></div>
+<ul>
+<li><p>En regardant la sortie <code>summary</code>, indiquez quelle est la variable la moins importante d’un point de vue statistique ? Enlever cette variable et ajuster le sous modèle obtenu <span class="math inline">\(M_4\)</span> et calculer son AIC.</p></li>
+<li><p>La commmande <code>step</code> va mettre en place le processus de sélection de variables descendantes automatiquement</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install package MASS install.packages(&quot;MASS&quot;)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>M_AIC <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">stepAIC</span>(Mcomp)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(M_AIC)</span></code></pre></div>
+<ul>
+<li>Le critère BIC est une variante du critère AIC, plus sévère sur l’intérêt d’inclure des variables, on obtient la sélection de variables à l’aide du BIC</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>M_BIC <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">stepAIC</span>(Mcomp, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(fromages)))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(M_BIC)</span></code></pre></div>
+<ul>
+<li>A la lumière des liens entre les différentes variables, commenter les résultats obtenus pour ce meilleur modèle au sens du BIC (meilleur compromis ajustement/nombre de paramètres)</li>
+</ul>
+Les mesures sur un nouvel échantillon de lait sont les suivantes :
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+DENSITE
+</th>
+<th style="text-align:right;">
+BUTYREUX
+</th>
+<th style="text-align:right;">
+PROTEINE
+</th>
+<th style="text-align:right;">
+CASEINE
+</th>
+<th style="text-align:right;">
+EXTRAITSEC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1.03
+</td>
+<td style="text-align:right;">
+37.7
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+<td style="text-align:right;">
+28.5
+</td>
+<td style="text-align:right;">
+127.1
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>A l’aide de la fonction <code>predict</code>, déterminer l’intervalle de confiance associé à ce rendement moyen.</p></li>
+<li><p>Déterminer l’intervalle de prédiction associé à l’estimation du rendement d’un tel lait.</p></li>
+</ul>
 </div>
-<ul>
-<li><p>Montrer graphiquement qu’en moyenne la prédiction du taux de glucose d’un abricot par le modèle ci-dessus sur-estime le taux de glucose pour les abricots au stade de maturité 2 et au contraire, le sous-estime pour les abricots au stade de maturité 3.</p></li>
-<li><p>Proposer une extension du modèle ci-dessus visant à corriger le problème de <em>biais de prédiction</em> mis en avant dans la question précédente.</p></li>
-<li><p>La relation liant l’indice a et le taux de Glucose est-elle la même à tous les stades de Maturité ?</p></li>
-<li><p>Au vu des résultats précédents, choisir un modèle pour prédire au mieux le taux de glucose d’un abricot.</p></li>
-<li><p>Donner un intervalle de confiance de niveau 95 % de la valeur prédite du taux de glucose pour un abricot dont l’indice colorimétrique ‘a’ est égal à 5 et dont le stade de maturité est ‘2’ et pour un abricot de stade de maturité ‘3’.</p></li>
-</ul>
 </div>
 </div>
 <div id="le-vocabulaire-de-la-séance" class="section level2">
@@ -332,21 +465,23 @@ La ligne bleue indique le taux de Glucose moyen prédit par le modèle en foncti
 <div id="commandes-r" class="section level3">
 <h3>Commandes R</h3>
 <ul>
-<li>anova</li>
-<li>Anova (package car)</li>
-<li>predict</li>
-<li>geom_smooth</li>
+<li>extractAIC</li>
+<li>stepAIC</li>
 </ul>
 </div>
 <div id="environnement-r" class="section level3">
 <h3>Environnement R</h3>
+<ul>
+<li>package(MASS)</li>
+</ul>
 </div>
 <div id="statistique" class="section level3">
 <h3>Statistique</h3>
 <ul>
-<li>Analyse de la variance</li>
-<li>Comparaison de droites de régression (Ancova)</li>
-<li>Regression</li>
+<li>Régression multiple</li>
+<li>ACP</li>
+<li>AIC</li>
+<li>BIC</li>
 </ul>
 </div>
 </div>
