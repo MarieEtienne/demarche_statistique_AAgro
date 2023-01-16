@@ -89,6 +89,7 @@ liste_complete %>%
 - [Jambon](jambon.txt) : données sur les dégustations de jambon,
 - [Lait](lait.txt) : données sur le lien entre rendement fromager et composition du lait,
 - [Manchots de Palmer](penguins.csv) : ce jeu de données est distribué dans le package [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) d'Allison Horst <img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png" alt="manchot" height="50"/>
+- [Données paléo climatiques actuelles](paleo_present.csv) et [données paléo climatiques passé](paleo_passe.csv)
 - [Poussins](poussin.txt) : Evolution du poids des poussins selon le sexe et le traitement,
 - [puissance1](puissance_1.csv) et [puissance2](puissance_2.csv),
 - [Sonde et sol](sonde_sol.csv) compariason de 3 sondes sur 2 types de sol.
