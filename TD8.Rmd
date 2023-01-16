@@ -1,5 +1,5 @@
 ---
-title: "TD7 : Comparaison de compotes"
+title: "TD8 : Comparaison de compotes"
 author: "UP Mathématique appliquée"
 date: ''
 output:
