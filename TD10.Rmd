@@ -67,7 +67,8 @@ extractAIC(Mcomp)
 
 * La commmande ` step` va mettre en place le processus de sélection de variables descendantes automatiquement
 
-```{r AIC, echo=TRUE}
+```{r AIC_select, echo=TRUE}
+library(MASS)
 M_AIC <- stepAIC(Mcomp)
 summary(M_AIC)
 ```
@@ -75,7 +76,7 @@ summary(M_AIC)
 * Le critère BIC est une variante du critère AIC, plus sévère sur l'intérêt d'inclure des variables, on obtient la sélection de variables à l'aide du BIC 
 
 
-```{r AIC, echo=TRUE}
+```{r BIC, echo=TRUE}
 M_BIC <- stepAIC(Mcomp, k = log(nrow(fromages)))
 summary(M_BIC)
 ```
