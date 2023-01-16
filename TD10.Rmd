@@ -68,8 +68,8 @@ extractAIC(Mcomp)
 * La commmande ` step` va mettre en place le processus de sélection de variables descendantes automatiquement
 
 ```{r AIC_select, echo=TRUE}
-library(MASS)
-M_AIC <- stepAIC(Mcomp)
+# install package MASS install.packages("MASS")
+M_AIC <- MASS::stepAIC(Mcomp)
 summary(M_AIC)
 ```
 
@@ -77,7 +77,7 @@ summary(M_AIC)
 
 
 ```{r BIC, echo=TRUE}
-M_BIC <- stepAIC(Mcomp, k = log(nrow(fromages)))
+M_BIC <- MASS::stepAIC(Mcomp, k = log(nrow(fromages)))
 summary(M_BIC)
 ```
 
