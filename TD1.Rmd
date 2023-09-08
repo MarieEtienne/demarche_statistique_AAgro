@@ -60,7 +60,8 @@ Exécuter la première ligne du script.
 Exécuter la ligne suivante.
 
 ```{r import, eval = TRUE, echo = FALSE}
-penguins <- read.table('https://agrocampusds.github.io/demarche_statistique/penguins.csv', sep = ';', header = TRUE)
+## R base
+penguins.dta <- read.table('https://agrocampusds.github.io/demarche_statistique/penguins.csv', sep = ';', header = TRUE)
 ```
 
 * Un objet apparaît dans l'environnement, quel est son nom ?
@@ -82,23 +83,34 @@ La commande `summary` appliquée à l'objet contenant les données importées, i
 library(tidyverse)
 ```
 
+On peut utiliser une fonction du package tidyverse pour lire le fichier `penguins.csv' au lieu d'une fonction de base.
+
+```{r read_tidy, eval = TRUE, echo = TRUE}
+library(tidyverse)
+## Lecture tidy
+penguins.dta <- read_delim(file = 'penguins.csv', delim = ';')
+```
+
 On souhaite traduire certains libellés des variables de l’anglais vers le français. C'est possible avec la fonction `rename` (issue du package `tidyverse`).  
 
 * Que fait le code suivant ? 
 
 ```{r code, eval = TRUE, echo = TRUE}
-penguins <- rename(.data = penguins, longueur_bec = bill_length_mm, 
-                   epaisseur_bec = bill_depth_mm)
+## R tidy
+penguins.fr <- penguins.dta %>%  
+  rename(longueur_bec = bill_length_mm, 
+         epaisseur_bec = bill_depth_mm)
 ```
 
 * Renommer de la même manière `species` en espece, `island` en ile, `body_mass_g` en poids, `flipper_length_mm` en longueur_nageoire, `sex` en sexe et `year` en annee (il faut éviter les caractères accentués et ne pas utiliser les espaces dans les noms de variables).
 
 ```{r rename_esp, echo = FALSE, eval = TRUE}
-penguins <- rename(.data = penguins, espece = species, 
-                   ile = island, poids = body_mass_g,
-                   longueur_nageoire= flipper_length_mm,
-                   sexe = sex,
-                   annee = year)
+penguins.fr <- penguins.fr %>% 
+  rename(espece = species, 
+         ile = island, poids = body_mass_g,
+         longueur_nageoire= flipper_length_mm,
+         sexe = sex,
+         annee = year)
 ```
 
 ### Visualisation de données
@@ -116,8 +128,9 @@ La répartition des valeurs d'une variable qualitative peut être visualisée à
 * Ajouter la commande ci-dessous dans votre script `R` puis l'exécuter.
 
 ```{r barplot, eval = FALSE}
-ggplot(data = penguins) + 
-  geom_bar(aes(x = espece))
+penguins.fr %>% ggplot() +
+  aes(x = espece) +
+  geom_bar()
 ```
 
 La fonction `aes` permet de spécifier ce qui est représenté. Ici `aes( x = espece)` indique que la variable `espece` sera représentée sur l'abscisse du graphique. L'ordonnée n'étant pas spécifiée, le comportement par défaut de la fonction `geom_bar` sera utilisé et l'ordonnée correspond ainsi à l'effectif (le nombre d'individus) de chaque classe. 
@@ -131,8 +144,9 @@ La distribution  des valeurs d'une variable quantitative peut être représenté
 Par défaut, sans autre indication dans la fonction `aes`, l'ordonnée de l'histogramme indique l'effectif de manchots par classe de valeurs. Dans la définition mathématique de l'histogramme, les aires de chaque barre sont proportionnelles aux fréquences (proportions d'individus dans chaque classe), l'ordonnée représentant alors une densité. Pour obtenir ce graphique,  il faut modifier le comportement par défaut de la fonction `aes` pour spécifier l'ordonnée explicitement avec un mot réservé `..density..`. 
 
 ```{r histogram,  fig.show='hide'}
-ggplot(data = penguins) +
-  geom_histogram(aes(x = longueur_bec, y = ..density..))
+penguins.fr %>% ggplot() +
+  aes(x = longueur_bec) +
+  geom_histogram(aes(y = after_stat(density)))
 ```
 
 
@@ -143,22 +157,26 @@ Il est possible de modifier le nombre de classes de l'histogramme grâce à l'ar
 La couleur de fond de l'histogramme peut être modifiée grâce à l'argument `fill`.
 
 ```{r histogram_fill, fig.show='hide'}
-ggplot(data = penguins) +
-  geom_histogram(aes(x = longueur_bec, y = ..density..), fill = 'green')
+penguins.fr %>% ggplot() +
+  aes(x = longueur_bec) +
+  geom_histogram(aes(y = after_stat(density)), fill = 'green')
 ```
 
 La couleur peut être choisie plus harmonieusement et spécifiée sous [format html](https://htmlcolorcodes.com/color-picker/). Par exemple :
 
 ```{r histogram_fill_nice, fig.show='hide'}
-ggplot(data = penguins) +
-  geom_histogram(aes(x = longueur_bec, y = ..density..), fill = '#59C9A5')
+penguins.fr %>% ggplot() +
+  aes(x = longueur_bec) +
+  geom_histogram(aes(y = after_stat(density)), fill = '#59C9A5')
 ```
 
 Enfin, il est possible de modifier la couleur des traits
 
 ```{r histogram_fill_nice_col, fig.show='hide'}
-ggplot(data = penguins) +
-  geom_histogram(aes(x = longueur_bec, y = ..density..), fill = '#59C9A5', col = '#5C6D70')
+penguins.fr %>% ggplot() +
+  aes(x = longueur_bec) +
+  geom_histogram(aes(y = after_stat(density)), fill = '#59C9A5',
+                 col = '#5C6D70')
 ```
 
 * Proposer une représentation de la distribution des longueurs de bec qui ne contient que 10 classes de valeurs.
@@ -166,8 +184,9 @@ ggplot(data = penguins) +
 Il est possible d'enregistrer l'objet graphique produit par `R` :
 
 ```{r histogram_save, fig.show='hide'}
-p1 <- ggplot(data = penguins) +
-  geom_histogram(aes(x = longueur_bec, y = ..density..))
+p1 <-penguins.fr %>% ggplot() +
+  aes(x = longueur_bec) +
+  geom_histogram(aes(y = after_stat(density)))
 p1
 ```
 
