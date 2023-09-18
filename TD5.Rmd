@@ -67,7 +67,7 @@ Durant 10 jours, on a noté pour 3 chaînes de production différentes les poids
 
 #### Situation 2
 
-Pour évaluer l'impact de complément alimentaire sur la production de lait dans un élevage bovin, on réalise l'expérimentation suivante. On choisit au hasard 40 vaches dans l'élevage. 10 vaches recoivent uniquement du fourrage, 10 vaches recoivent du fourrage et le complément alimentaire,  10 vaches recoivent du fourrage et du soja, et les 1à dernières vaches reçoivent fourrage, soja et complément.
+Pour évaluer l'impact de complément alimentaire sur la production de lait dans un élevage bovin, on réalise l'expérimentation suivante. On choisit au hasard 40 vaches dans l'élevage. 10 vaches recoivent uniquement du fourrage, 10 vaches recoivent du fourrage et le complément alimentaire,  10 vaches recoivent du fourrage et du soja, et les 10 dernières vaches reçoivent fourrage, soja et complément.
 
 
 
