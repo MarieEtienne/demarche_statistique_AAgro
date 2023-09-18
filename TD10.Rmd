@@ -1,0 +1,146 @@
+---
+title: "TD10 : Régression multiple"
+author: "UP Mathématiques appliquées"
+date: ''
+output:
+  html_document:
+    theme: united
+    css: style.css
+    highlight: tango
+mainfont: SourceSansPro
+header-includes:
+- \usepackage[default]{sourcesanspro}
+- \usepackage[T1]{fontenc}
+---
+
+
+```{r setup-TD13, include=FALSE, }
+knitr::opts_chunk$set(echo = FALSE, cache= TRUE, eval = TRUE, fig.show='hide', message = FALSE, warning = FALSE, results = 'hide' )
+library(tidyverse)
+library(kableExtra)
+out_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+```
+
+
+# {.tabset .tabset-fade .tabset-pills}
+
+##  Objectifs de la séance  
+
+* Visualisation de données
+  - Visualiser les relations entre au sein d'un ensemble de variables quantitatives
+  
+* Analyse de données
+   - Utiliser l'ACP pour visualisaer des données
+   - Comprendre le modèle de régression multiple
+   - Analyser les sorties d'un modèles de régression multiple
+  
+  
+## Exercices 
+
+### Etude du rendement fromager
+
+Un laboratoire d'analyse souhaite mettre en évidence l'influence de la composition du lait sur le rendement
+fromager. Pour ce faire, il a mesuré sur un échantillon de n = 85 laits, la densité, le taux butyreux, le taux de
+protéine, le taux de caséine, l'extrait sec et le rendement fromager de chacun de ces laits.
+
+#### Importation du jeu de données  et matrice des corrélations
+* Charger les données provenant du fichier `lait.txt`.
+* Faire une Analyse en Composantes Principales pour visualiser les relations entre les différentes variables
+* A la lumière de cette ACP, à quoi faudra-t-il être attentif dans l'analyse ?
+
+```{r, echo=FALSE, results='markup', eval = TRUE}
+fromages <- read.table("lait.txt", sep = "\t", dec = ",", header = T)
+Mcomp <- lm(RENDEMENT ~ ., data = fromages) 
+```
+
+
+
+#### Modélisation et prédiction
+
+* Construire le modèle permettant de prédire le rendement à l'aide de toutes les variables.
+* La commande AIC dans R permet de calculer le critère AIC pour le modèle sélectionner. Calculer donc ce critère à l'aide de 
+```{r AIC, echo=TRUE}
+extractAIC(Mcomp)
+```
+
+* En regardant la sortie ` summary`, indiquez quelle est la variable la moins importante d'un point de vue statistique ? Enlever cette variable et ajuster le sous modèle obtenu $M_4$ et calculer son AIC.
+
+* La commmande ` step` va mettre en place le processus de sélection de variables descendantes automatiquement
+
+```{r AIC_select, echo=TRUE}
+# install package MASS install.packages("MASS")
+M_AIC <- MASS::stepAIC(Mcomp)
+summary(M_AIC)
+```
+
+* Le critère BIC est une variante du critère AIC, plus sévère sur l'intérêt d'inclure des variables, on obtient la sélection de variables à l'aide du BIC 
+
+
+```{r BIC, echo=TRUE}
+M_BIC <- MASS::stepAIC(Mcomp, k = log(nrow(fromages)))
+summary(M_BIC)
+```
+
+* A la lumière des liens entre les différentes variables, commenter les résultats obtenus pour ce meilleur modèle au sens du BIC (meilleur compromis ajustement/nombre de paramètres)
+
+
+Les mesures sur un nouvel échantillon de lait sont les suivantes :
+```{r, echo=FALSE, results='markup', eval = TRUE}
+fromagesNEW <- data.frame(1.032,37.7,35.7,28.5,127.1) 
+  names(fromagesNEW) <- names(fromages)[-6]
+fromagesNEW %>% 
+  kable(digits=2, format = "html", escape = FALSE) %>%
+  collapse_rows(columns = 1, valign = 'top') %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+* A l'aide de la fonction `predict`, déterminer l'intervalle de confiance associé à ce rendement moyen.
+
+```{r, echo=FALSE, eval=FALSE, results='markup' }
+predict(mod, newdata = fromagesNEW, interval = "confidence")
+```
+
+* Déterminer l'intervalle de prédiction associé à l'estimation du rendement d'un tel lait.
+
+```{r, echo=FALSE, eval=FALSE, results='markup' }
+predict(mod, newdata = fromagesNEW, interval = "prediction")
+```
+
+
+### La paléoclimatologie : utiliser les pollens comme témoins de l'évolution du climat
+
+On s'intéresse ici à des données de paléoclimatologie, i.e. la science qui étudie les climats passés et leurs variations. Cela permet de mieux comprendre les évolutions du climat actuelles et à quel point elles sont liées à l'homme.
+Le jeu de données (fourni par Joël Guiot) correspond à 700 relevés (dans 700 endroits différents du globe) qui mesurent le pourcentage de pollens de 31 espèces d'arbres. 
+Ces relevés ont été effectués récemment (lors de ce siècle) et nous disposons donc aussi des relevés de variables climatiques, et notamment la température moyenne annuelle.
+
+On donne également pour chaque relevé le macrosystème (on parle aussi de biomes) du prélèvement. 9 macrosystèmes différents sont possibles : COCO (cool conifer forest), COMX (cool mixed forest), COST (cool steppes), HODE (hot desert), TEDE (temperate deciduous forest), TUND (tundra), WAMX (warm mixed broad-leaved forest), WAST (warm steppes), XERO (xerophytic scrubs).
+
+Les données sont diponibles dans le [fichier](paleo_present.csv). 
+
+1. On cherche à voir s'il est possible de modéliser la température annuelle en fonction des données disponibles. Proposer un modèle.
+2. Construire ce modèle et commenter la qualité du modèle (R²).
+
+On souhaite maintenant utiliser ce modèle pour prévoir la température moyenne annuelle dans les siècles précédents. 
+On dispose pour cela des relevés d'une carotte glaciaire. Sur cette carotte, on peut, siècle par siècle, obtenir le pourcentage de chacun des 31 pollens. Ces échantillons remontent à 128 siècles et sont notés BPxx pour Before Present xx siècles : BP15 il y a 15 siècles (ceci est approximatif, la datation avant le présent est donnée dans la colonne age). 
+Pour ces données, on ne dispose pas du macroécosystème, ni bien entendu du climat. L'objectif est justement d'essayer de prédire le climat au cours des siècles passés à partir de la composition en les différents pollens.
+
+Les données du passé, pour lesquelles on veut faire des prévisions, sont diponibles dans le [fichier](paleo_passe.csv). Pour importer ce jeu de données, on utilisera row.names=1 pour que la date correspond au nom de l'échantillon.
+
+3. Le modèle que vous avez construit précédemment est-il utile pour prédire la température moyenne annuelle des siècles passé ? Si non, comment feriez-vous ?
+4. Prédire la température moyenne annuelle pour le siècle BP15 et BP100 (il faudra certainement attendre le prochain cours pour savoir faire cette prévision !)
+
+
+## Le vocabulaire de la séance
+
+### Commandes R
+- extractAIC
+- stepAIC
+
+### Environnement R
+- package(MASS)
+
+### Statistique 
+- Régression multiple
+- ACP
+- AIC
+- BIC
