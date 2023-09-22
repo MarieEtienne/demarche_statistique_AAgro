@@ -126,7 +126,7 @@ cafe %>%
 
 * Calculer l'écart-type et la variance pour chaque origine.
 
-Les lignes ci-dessous calculent la moyenne, la variance et certains quantiles pour chaque origine de café
+Les lignes ci-dessous calculent la moyenne, l'écart type et certains quantiles pour chaque origine de café
 
 ```{r stat_desc, echo = TRUE, results='markup'}
 stat_desc <- cafe %>% 
