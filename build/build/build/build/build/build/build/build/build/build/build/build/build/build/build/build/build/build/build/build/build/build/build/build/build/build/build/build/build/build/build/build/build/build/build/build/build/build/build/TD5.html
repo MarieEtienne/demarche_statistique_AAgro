@@ -441,7 +441,7 @@ $(document).ready(function () {
 <ul>
 <li>Calculer l’écart-type et la variance pour chaque origine.</li>
 </ul>
-<p>Les lignes ci-dessous calculent la moyenne, la variance et certains quantiles pour chaque origine de café</p>
+<p>Les lignes ci-dessous calculent la moyenne, l’écart type et certains quantiles pour chaque origine de café</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stat_desc <span class="ot">&lt;-</span> cafe <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Localisation) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">DM_mean =</span> <span class="fu">mean</span>(DM), </span>
